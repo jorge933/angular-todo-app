@@ -7,22 +7,14 @@ export const TASKS_MOCK: Task[] = [
   },
   {
     id: 2,
-    name: 'read',
+    name: 'work',
   },
   {
     id: 3,
-    name: 'read',
+    name: 'write',
   },
   {
     id: 4,
-    name: 'read',
-  },
-  {
-    id: 5,
-    name: 'read',
-  },
-  {
-    id: 6,
-    name: 'read',
+    name: 'study',
   },
 ];
