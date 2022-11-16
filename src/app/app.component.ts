@@ -29,9 +29,12 @@ export class AppComponent {
     return lastId;
   }
 
-  excludeTask(taskExclude: Task) {
+  excludeTask(taskToExclude: Task) {
     this.tasks.find((task, index) => {
-      if (task === taskExclude) {
+      const taskToExcludeId = taskToExclude.id;
+      const taskId = task.id;
+      const isTaskToExclude = taskId === taskToExcludeId;
+      if (isTaskToExclude) {
         this.tasks.splice(index, 1);
       }
     });
@@ -39,9 +42,10 @@ export class AppComponent {
 
   editTaskName(newName: string, taskToEdit: Task) {
     this.tasks.find((task, index) => {
-      const taskName = taskToEdit.name;
-      const currentTaskName = task.name;
-      if (taskName === currentTaskName) {
+      const taskToEditId = taskToEdit.id;
+      const taskId = task.id;
+      const isTaskToEdit = taskToEditId === taskId;
+      if (isTaskToEdit) {
         this.tasks[index].name = newName;
       }
     });
