@@ -37,4 +37,16 @@ describe('AppComponent', () => {
 
     expect(newTasksLength).toBe(newLength);
   });
+
+  it('should edit a task', () => {
+    const newTaskName = 'Fun';
+    const taskToEdit = component.tasks[0];
+
+    component.editTaskName(newTaskName, taskToEdit);
+
+    const task = component.tasks[0];
+    const { name: taskName } = task;
+
+    expect(newTaskName).toBe(taskName);
+  });
 });
