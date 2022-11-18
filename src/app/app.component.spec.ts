@@ -27,4 +27,14 @@ describe('AppComponent', () => {
     expect(newLengthExpected).toBe(newTasksArrayLength);
   });
 
+  it('should exclude a task', () => {
+    const taskToExclude = component.tasks[0];
+    const tasksLength = component.tasks.length;
+    const newTasksLength = tasksLength - 1;
+
+    component.excludeTask(taskToExclude);
+    const newLength = component.tasks.length;
+
+    expect(newTasksLength).toBe(newLength);
+  });
 });
