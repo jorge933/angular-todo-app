@@ -36,8 +36,8 @@ export class AppComponent {
 
   editTaskName(newName: string, taskToEdit: Task) {
     this.tasks.find((task, index) => {
-      const taskToEditId = taskToEdit.id;
-      const taskId = task.id;
+      const { id: taskToEditId } = taskToEdit;
+      const { id: taskId } = task;
       const isTaskToEdit = taskToEditId === taskId;
       if (isTaskToEdit) {
         this.tasks[index].name = newName;
