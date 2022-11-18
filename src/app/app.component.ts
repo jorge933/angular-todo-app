@@ -30,14 +30,8 @@ export class AppComponent {
   }
 
   excludeTask(taskToExclude: Task) {
-    this.tasks.find((task, index) => {
-      const taskToExcludeId = taskToExclude.id;
-      const taskId = task.id;
-      const isTaskToExclude = taskId === taskToExcludeId;
-      if (isTaskToExclude) {
-        this.tasks.splice(index, 1);
-      }
-    });
+    const taskObj = this.tasks.filter((task) => task.id !== taskToExclude.id);
+    this.tasks = taskObj;
   }
 
   editTaskName(newName: string, taskToEdit: Task) {
