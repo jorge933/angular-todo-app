@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { TASKS_MOCK } from './mocks/tasks.mock';
 import { Task } from './models/task';
+import { StorageService } from './services/storage/storage.service';
 
 @Component({
   selector: 'ta-root',
@@ -10,7 +10,10 @@ import { Task } from './models/task';
 })
 export class AppComponent {
   newTaskNameControl = new FormControl<string>('', [Validators.required]);
-  tasks: Task[] = TASKS_MOCK;
+  tasksInCache = this.storageService.getItem('tasks');
+  tasks: Task[] = this.tasksInCache ? JSON.parse(this.tasksInCache) : [];
+
+  constructor(private storageService: StorageService) {}
 
   createTask(event: SubmitEvent) {
     event.preventDefault();
@@ -20,6 +23,7 @@ export class AppComponent {
     if (hasRequiredError) return;
 
     this.createTaskModel();
+    this.saveTasksInLocalStorage();
 
     this.newTaskNameControl.reset();
   }
@@ -33,8 +37,8 @@ export class AppComponent {
 
   private generateId() {
     const lastTask = this.tasks[this.tasks.length - 1];
-    const lastId = lastTask?.id || 1;
-    return lastId;
+    const id = lastTask?.id + 1 || 1;
+    return id;
   }
 
   excludeTask(taskToExclude: Task) {
@@ -42,9 +46,16 @@ export class AppComponent {
       ...this.tasks.filter((task) => task.id !== taskToExclude.id),
     ];
     this.tasks = tasks;
+    this.saveTasksInLocalStorage();
   }
 
   editTaskName(newName: string, taskToEdit: Task) {
     taskToEdit.name = newName;
+    this.saveTasksInLocalStorage();
+  }
+
+  private saveTasksInLocalStorage() {
+    const tasksStringify = JSON.stringify(this.tasks);
+    this.storageService.setItem('tasks', tasksStringify);
   }
 }
