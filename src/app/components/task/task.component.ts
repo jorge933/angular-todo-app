@@ -20,15 +20,17 @@ export class TaskComponent {
     eventEmitter.emit();
   }
 
-  openDialog(): void {
+  openModalEditTaskName(): void {
     const taskName = this.task.name;
-    const dialogRef = this.dialog.open(EditTaskNameComponent, {
+    const dialogReference = this.dialog.open(EditTaskNameComponent, {
       data: taskName,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.task.name = result;
-      this.editTaskName.emit(result);
+    dialogReference.afterClosed().subscribe((newTaskName) => {
+      if (newTaskName) {
+        this.task.name = newTaskName;
+        this.editTaskName.emit(newTaskName);
+      }
     });
   }
 }
