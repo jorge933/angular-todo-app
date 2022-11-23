@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -8,11 +8,6 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./edit-task-name.component.scss'],
 })
 export class EditTaskNameComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: string) {}
-
   newName = new FormControl(this.data);
-
-  preventDefault(event: SubmitEvent) {
-    event.preventDefault();
-  }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: string) {}
 }

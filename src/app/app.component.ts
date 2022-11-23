@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { TASKS_MOCK } from './mocks/tasks.mock';
 import { Task } from './models/task';
 
@@ -9,39 +9,42 @@ import { Task } from './models/task';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  newTaskName = new FormControl('');
+  newTaskNameControl = new FormControl<string>('', [Validators.required]);
   tasks: Task[] = TASKS_MOCK;
 
   createTask(event: SubmitEvent) {
     event.preventDefault();
+
+    const hasRequiredError = this.newTaskNameControl.hasError('required');
+
+    if (hasRequiredError) return;
+
+    this.createTaskModel();
+
+    this.newTaskNameControl.reset();
+  }
+
+  private createTaskModel() {
     const id = this.generateId();
-    const name = this.newTaskName.value as string;
-    this.newTaskName.setValue(null);
-    const taskObj = { id, name };
-    this.tasks.push(taskObj);
+    const name = this.newTaskNameControl.value;
+    const task = { id, name };
+    this.tasks.push(task);
   }
 
   private generateId() {
-    const tasksLength = this.tasks.length;
-    const lastIndex = tasksLength - 1;
-    const lastTask = this.tasks[lastIndex];
+    const lastTask = this.tasks[this.tasks.length - 1];
     const lastId = lastTask?.id || 1;
     return lastId;
   }
 
   excludeTask(taskToExclude: Task) {
-    const taskObj = this.tasks.filter((task) => task.id !== taskToExclude.id);
-    this.tasks = taskObj;
+    const tasks = [
+      ...this.tasks.filter((task) => task.id !== taskToExclude.id),
+    ];
+    this.tasks = tasks;
   }
 
   editTaskName(newName: string, taskToEdit: Task) {
-    this.tasks.find((task, index) => {
-      const { id: taskToEditId } = taskToEdit;
-      const { id: taskId } = task;
-      const isTaskToEdit = taskToEditId === taskId;
-      if (isTaskToEdit) {
-        this.tasks[index].name = newName;
-      }
-    });
+    taskToEdit.name = newName;
   }
 }

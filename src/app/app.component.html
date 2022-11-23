@@ -1,21 +1,27 @@
-<form class="example-form" (submit)="createTask($event)">
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>New Task</mat-label>
-    <input
-      type="text"
-      matInput
-      [formControl]="newTaskName"
-      placeholder="Ex. Read"
-    />
-  </mat-form-field>
-  <button type="submit">Create</button>
-</form>
+<header>
+  <h1>Todo-App</h1>
 
-<div class="tasks">
-  <ta-task
-    *ngFor="let task of tasks"
-    [task]="task"
-    (excludeTask)="excludeTask(task)"
-    (editTaskName)="editTaskName($event, task)"
-  ></ta-task>
-</div>
+  <form (submit)="createTask($event)">
+    <mat-form-field>
+      <mat-label>Type new task name...</mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="newTaskNameControl"
+        placeholder="Ex. Read"
+      />
+    </mat-form-field>
+    <button type="submit">&#43; Add</button>
+  </form>
+</header>
+
+<div class="tasks"></div>
+<mat-list class="tasks">
+  <mat-list-item *ngFor="let task of tasks"
+    ><ta-task
+      [task]="task"
+      (excludeTask)="excludeTask(task)"
+      (editTaskName)="editTaskName($event, task)"
+    ></ta-task
+  ></mat-list-item>
+</mat-list>

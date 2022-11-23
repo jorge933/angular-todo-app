@@ -1,0 +1,49 @@
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  align-items: center;
+  border-bottom: 1.5px solid #9d9797;
+  opacity: 0.8;
+
+  &:hover {
+    opacity: 1;
+    background-color: #9d979748;
+  }
+
+  span {
+    font: 500 17px "Poppins";
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+
+    button {
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: 0.15s ease-in-out;
+
+      &:hover {
+        transform: scale(1.4);
+      }
+
+      mat-icon {
+        font-size: 21px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &[fontIcon="edit"] {
+          color: #0011e1;
+        }
+
+        &[fontIcon="delete"] {
+          color: #dd0c0c;
+        }
+      }
+    }
+  }
+}

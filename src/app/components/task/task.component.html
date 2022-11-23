@@ -1,3 +1,9 @@
-<p>{{ task.name }}</p>
-<button (click)="openDialog()">Edit</button>
-<button (click)="emitEvent('excludeTask')">Exclude</button>
+<span>{{ task.name }}</span>
+<div class="actions">
+  <button (click)="openDialog()">
+    <mat-icon fontIcon="edit"></mat-icon>
+  </button>
+  <button (click)="emitEvent('excludeTask')">
+    <mat-icon fontIcon="delete"></mat-icon>
+  </button>
+</div>

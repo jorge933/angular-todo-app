@@ -19,7 +19,7 @@ describe('AppComponent', () => {
     const tasksArrayLength = component.tasks.length;
     const newLengthExpected = tasksArrayLength + 1;
 
-    component.newTaskName.setValue('Work');
+    component.newTaskNameControl.setValue('Work');
     $form.dispatchEvent(submitEvent);
 
     const newTasksArrayLength = component.tasks.length;
@@ -47,6 +47,6 @@ describe('AppComponent', () => {
     const task = component.tasks[0];
     const { name: taskName } = task;
 
-    expect(newTaskName).toBe(taskName);
+    expect(newTaskName).toBe(taskName ?? '');
   });
 });

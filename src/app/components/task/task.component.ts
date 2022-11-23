@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Task } from 'src/app/models/task';
 import { EditTaskNameComponent } from '../edit-task-name/edit-task-name.component';
@@ -9,7 +9,7 @@ import { EditTaskNameComponent } from '../edit-task-name/edit-task-name.componen
   styleUrls: ['./task.component.scss'],
 })
 export class TaskComponent {
-  constructor(private dialog: MatDialog) {}
+  constructor(private readonly dialog: MatDialog) {}
 
   @Input() task: Task;
   @Output() excludeTask = new EventEmitter<null>();

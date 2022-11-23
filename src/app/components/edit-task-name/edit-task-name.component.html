@@ -1,15 +1,14 @@
-<form (submit)="preventDefault($event)">
-  <div mat-dialog-content>
-    <mat-form-field appearance="fill">
+<form (submit)="$event.preventDefault()">
+  <div>
+    <mat-form-field>
       <mat-label>Edit Task Name</mat-label>
-      <input matInput [formControl]="newName" />
+      <input [formControl]="newName" />
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    <button mat-button mat-dialog-close>Close</button>
+    <button mat-dialog-close>Close</button>
     <button
       type="submit"
-      mat-button
       [mat-dialog-close]="newName.value"
       [disabled]="data === newName.value || !newName.value"
     >
