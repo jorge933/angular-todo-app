@@ -11,7 +11,7 @@ describe('StorageService', () => {
     const key = 'testing';
     const value = 'lorem!';
     storageService.setItem(key, value);
-    const item = localStorage.getItem(key) ?? '';
+    const item = storageService.getItem(key) ?? '';
 
     expect(value).toBe(item);
   });
@@ -19,7 +19,7 @@ describe('StorageService', () => {
   it('should get item from local storage', () => {
     const key = 'testing';
     const value = 'lorem!';
-    localStorage.setItem(key, value);
+    storageService.setItem(key, value);
 
     const item = storageService.getItem(key) ?? '';
 
