@@ -40,4 +40,15 @@ describe('TaskComponent', () => {
 
     expect(editTaskName.emit).toHaveBeenCalledWith(valueToEmit);
   });
+
+  it('should emit a value when user completed a task', () => {
+    const completedTask = component.completedTask;
+    spyOn(completedTask, 'emit');
+
+    completedTask.emit();
+
+    fixture.detectChanges();
+
+    expect(completedTask.emit).toHaveBeenCalled();
+  });
 });
