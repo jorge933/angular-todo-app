@@ -9,7 +9,10 @@ import { StorageService } from './services/storage/storage.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  newTaskNameControl = new FormControl<string>('', [Validators.required]);
+  newTaskNameControl = new FormControl<string>('', [
+    Validators.required,
+    Validators.maxLength(16),
+  ]);
   tasksInCache = this.storageService.getItem('tasks');
   tasks: Task[] = this.tasksInCache ? JSON.parse(this.tasksInCache) : [];
 
