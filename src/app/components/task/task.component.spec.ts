@@ -29,4 +29,15 @@ describe('TaskComponent', () => {
     expect(excludeTask.emit).toHaveBeenCalled();
   });
 
+  it('should emit a value when user edit a task', () => {
+    const editTaskName = component.editTaskName;
+    spyOn(editTaskName, 'emit');
+    const valueToEmit = 'foo';
+
+    editTaskName.emit(valueToEmit);
+
+    fixture.detectChanges();
+
+    expect(editTaskName.emit).toHaveBeenCalledWith(valueToEmit);
+  });
 });
