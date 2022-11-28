@@ -2,8 +2,8 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 10px 20px;
   align-items: center;
+  padding: 10px 20px;
   border-bottom: 1.5px solid #9d9797;
   opacity: 0.8;
 
@@ -12,8 +12,17 @@
     background-color: #9d979748;
   }
 
-  span {
-    font: 500 17px "Poppins";
+  div {
+    display: flex;
+
+    span {
+      font: 500 17px "Poppins";
+      margin-left: 10px;
+
+      &.completed {
+        text-decoration: line-through;
+      }
+    }
   }
 
   .actions {
@@ -45,5 +54,13 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: 280px) {
+  :host {
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
   }
 }

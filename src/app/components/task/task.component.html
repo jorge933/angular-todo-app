@@ -1,4 +1,10 @@
-<span>{{ task.name }}</span>
+<div>
+  <mat-checkbox
+    [(ngModel)]="task.completed"
+    (click)="changeCompletedTaskValue()"
+  ></mat-checkbox>
+  <span [ngClass]="{ completed: task.completed }">{{ task.name }}</span>
+</div>
 <div class="actions">
   <button (click)="openModalEditTaskName()">
     <mat-icon fontIcon="edit"></mat-icon>
