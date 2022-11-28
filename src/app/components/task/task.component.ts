@@ -14,9 +14,10 @@ export class TaskComponent {
   @Input() task: Task;
   @Output() excludeTask = new EventEmitter<null>();
   @Output() editTaskName = new EventEmitter<string>();
+  @Output() completedTask = new EventEmitter<null>();
 
-  emitEvent(propertyName: 'excludeTask' | 'editTaskName') {
-    const eventEmitter = this[propertyName];
+  emitEvent(propertyName: keyof TaskComponent) {
+    const eventEmitter = this[propertyName] as EventEmitter<unknown>;
     eventEmitter.emit();
   }
 
@@ -32,5 +33,11 @@ export class TaskComponent {
         this.editTaskName.emit(newTaskName);
       }
     });
+  }
+
+  changeCompletedTaskValue() {
+    const newCompletedValue = !this.task.completed;
+    this.task.completed = newCompletedValue;
+    this.completedTask.emit();
   }
 }

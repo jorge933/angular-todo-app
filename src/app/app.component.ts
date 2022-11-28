@@ -61,4 +61,10 @@ export class AppComponent {
     const tasksStringify = JSON.stringify(this.tasks);
     this.storageService.setItem('tasks', tasksStringify);
   }
+
+  completedTask(task: Task) {
+    const newCompletedValue = !task.completed;
+    task.completed = newCompletedValue;
+    this.saveTasksInLocalStorage();
+  }
 }
