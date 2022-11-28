@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppComponent } from './app.component';
 import { TaskComponent } from './components/task/task.component';
@@ -21,6 +22,7 @@ import { EditTaskNameComponent } from './components/edit-task-name/edit-task-nam
     MatDialogModule,
     MatListModule,
     MatIconModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
