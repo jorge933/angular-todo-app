@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
@@ -23,6 +23,7 @@ import { EditTaskNameComponent } from './components/edit-task-name/edit-task-nam
     MatListModule,
     MatIconModule,
     MatCheckboxModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
