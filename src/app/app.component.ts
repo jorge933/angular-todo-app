@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Task } from './models/task';
+import { Task } from './models/task.model';
 import { StorageService } from './services/storage/storage.service';
 
 @Component({

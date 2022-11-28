@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Task } from 'src/app/models/task';
+import { Task } from 'src/app/models/task.model';
 import { EditTaskNameComponent } from '../edit-task-name/edit-task-name.component';
 
 @Component({
