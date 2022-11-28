@@ -33,8 +33,8 @@ export class AppComponent {
 
   private createTaskModel() {
     const id = this.generateId();
-    const name = this.newTaskNameControl.value;
-    const task = { id, name };
+    const name = this.newTaskNameControl.value as string;
+    const task = { id, name, completed: false };
     this.tasks.push(task);
   }
 
