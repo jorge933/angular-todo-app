@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
-import { TASKS_MOCK } from 'src/app/mocks/tasks.mock';
-import { EditTaskNameComponent } from '../edit-task-name/edit-task-name.component';
-import { TaskComponent } from './task.component';
+import { TASKS_MOCK } from '@todo-app/mocks';
+import { TaskComponent } from '@todo-app/components';
 
 describe('TaskComponent', () => {
   let fixture: ComponentFixture<TaskComponent>;
@@ -10,7 +9,7 @@ describe('TaskComponent', () => {
   const task = TASKS_MOCK[0];
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TaskComponent, EditTaskNameComponent],
+      declarations: [TaskComponent],
       imports: [MatDialogModule],
     }).compileComponents();
     fixture = TestBed.createComponent(TaskComponent);

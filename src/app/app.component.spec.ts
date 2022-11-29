@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { TASKS_MOCK } from './mocks/tasks.mock';
+import { TASKS_MOCK } from '@todo-app/mocks';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;

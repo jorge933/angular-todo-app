@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Task } from './models/task.model';
-import { StorageService } from './services/storage/storage.service';
+import { Task } from '@todo-app/models';
+import { StorageService } from '@todo-app/services';
 
 @Component({
   selector: 'ta-root',

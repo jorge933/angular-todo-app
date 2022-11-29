@@ -1,4 +1,4 @@
-import { Task } from '../models/task.model';
+import { Task } from '@todo-app/models';
 
 export const TASKS_MOCK: Task[] = [
   {
