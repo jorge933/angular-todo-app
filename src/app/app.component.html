@@ -5,27 +5,46 @@
   <form (submit)="createTask($event)">
     <div>
       <mat-form-field floatLabel="always">
-      <mat-label>Type new task name...</mat-label>
-      <input
-        type="text"
-        matInput
-        [formControl]="newTaskNameControl"
-        placeholder="Ex. Read"
-      />
-    </mat-form-field>
-    <button type="submit">&#43; Add</button>
+        <mat-label>Type new task name...</mat-label>
+        <input
+          type="text"
+          matInput
+          [formControl]="newTaskNameControl"
+          placeholder="Ex. Read"
+        />
+      </mat-form-field>
+      <button
+        mat-stroked-button
+        color="primary"
+        type="submit"
+        [disabled]="
+          this.newTaskNameControl.hasError('required') ||
+          this.newTaskNameControl.hasError('maxlength')
+        "
+      >
+        <span>&#43; </span>
+      </button>
+    </div>
+    <mat-error
+      *ngIf="
+        newTaskNameControl.hasError('required') && newTaskNameControl.touched
+      "
+    >
+      Name is required
+    </mat-error>
+    <mat-error *ngIf="newTaskNameControl.hasError('maxlength')">
+      Name must be less than 16 letters
+    </mat-error>
   </form>
-</header>
-
-<div class="tasks"></div>
-<mat-list class="tasks">
-  <mat-list-item *ngFor="let task of tasks"
-    ><ta-task
-      [task]="task"
-      (excludeTask)="excludeTask(task)"
-      (editTaskName)="editTaskName($event, task)"
-      (completedTask)="completedTask(task)"
-    ></ta-task
-  ></mat-list-item>
-</mat-list>
+  <div class="tasks"></div>
+  <mat-list class="tasks">
+    <mat-list-item *ngFor="let task of tasks"
+      ><ta-task
+        [task]="task"
+        (excludeTask)="excludeTask(task)"
+        (editTaskName)="editTaskName($event, task)"
+        (completedTask)="completedTask(task)"
+      ></ta-task
+    ></mat-list-item>
+  </mat-list>
 </section>
