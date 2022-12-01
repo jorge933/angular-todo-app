@@ -25,13 +25,6 @@
         <span>&#43; </span>
       </button>
     </div>
-    <mat-error
-      *ngIf="
-        newTaskNameControl.hasError('required') && newTaskNameControl.touched
-      "
-    >
-      Name is required
-    </mat-error>
     <mat-error *ngIf="newTaskNameControl.hasError('maxlength')">
       Name must be less than 16 letters
     </mat-error>
