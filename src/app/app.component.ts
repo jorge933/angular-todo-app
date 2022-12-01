@@ -16,18 +16,7 @@ export class AppComponent {
 
   tasksInCache = this.storageService.getItem('tasks');
 
-  private _tasks: Task[] = this.tasksInCache
-    ? JSON.parse(this.tasksInCache)
-    : [];
-
-  set tasks(tasks: Task[]) {
-    this._tasks = tasks;
-    this.saveTasksInLocalStorage();
-  }
-
-  get tasks() {
-    return this._tasks;
-  }
+  tasks: Task[] = this.tasksInCache ? JSON.parse(this.tasksInCache) : [];
 
   constructor(private storageService: StorageService) {}
 
@@ -35,6 +24,7 @@ export class AppComponent {
     event.preventDefault();
 
     this.createTaskModel();
+    this.saveTasksInLocalStorage();
 
     this.newTaskNameControl.reset();
   }
@@ -57,10 +47,12 @@ export class AppComponent {
       ...this.tasks.filter((task) => task.id !== taskToExclude.id),
     ];
     this.tasks = tasks;
+    this.saveTasksInLocalStorage();
   }
 
   editTaskName(newName: string, taskToEdit: Task) {
     taskToEdit.name = newName;
+    this.saveTasksInLocalStorage();
   }
 
   private saveTasksInLocalStorage() {
@@ -71,5 +63,6 @@ export class AppComponent {
   completedTask(task: Task) {
     const newCompletedValue = !task.completed;
     task.completed = newCompletedValue;
+    this.saveTasksInLocalStorage();
   }
 }
