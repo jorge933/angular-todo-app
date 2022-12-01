@@ -13,20 +13,28 @@ export class AppComponent {
     Validators.required,
     Validators.maxLength(16),
   ]);
+
   tasksInCache = this.storageService.getItem('tasks');
-  tasks: Task[] = this.tasksInCache ? JSON.parse(this.tasksInCache) : [];
+
+  private _tasks: Task[] = this.tasksInCache
+    ? JSON.parse(this.tasksInCache)
+    : [];
+
+  set tasks(tasks: Task[]) {
+    this._tasks = tasks;
+    this.saveTasksInLocalStorage();
+  }
+
+  get tasks() {
+    return this._tasks;
+  }
 
   constructor(private storageService: StorageService) {}
 
   createTask(event: SubmitEvent) {
     event.preventDefault();
 
-    const hasRequiredError = this.newTaskNameControl.hasError('required');
-
-    if (hasRequiredError) return;
-
     this.createTaskModel();
-    this.saveTasksInLocalStorage();
 
     this.newTaskNameControl.reset();
   }
@@ -49,12 +57,10 @@ export class AppComponent {
       ...this.tasks.filter((task) => task.id !== taskToExclude.id),
     ];
     this.tasks = tasks;
-    this.saveTasksInLocalStorage();
   }
 
   editTaskName(newName: string, taskToEdit: Task) {
     taskToEdit.name = newName;
-    this.saveTasksInLocalStorage();
   }
 
   private saveTasksInLocalStorage() {
@@ -65,6 +71,5 @@ export class AppComponent {
   completedTask(task: Task) {
     const newCompletedValue = !task.completed;
     task.completed = newCompletedValue;
-    this.saveTasksInLocalStorage();
   }
 }

@@ -1,11 +1,12 @@
-button {
-  background: none;
-  border: none;
-  font: 600 14px "Poppins";
-  cursor: pointer;
-  opacity: 0.8;
-
-  &:hover {
-    opacity: 1;
+:host {
+  position: relative;
+  [mat-dialog-close] {
+    position: absolute;
+    right: 0;
+    top: 1px;
+    background: none;
+    border: none;
+    font: 600 14px "Poppins";
+    cursor: pointer;
   }
 }

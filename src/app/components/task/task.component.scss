@@ -7,21 +7,39 @@
   border-bottom: 1.5px solid #9d9797;
   opacity: 0.8;
 
+  @media (max-width: 380px) {
+    & {
+      flex-direction: column;
+      justify-content: center;
+      padding: 0;
+      .row {
+        padding-bottom: 20px;
+      }
+    }
+  }
+
   &:hover {
     opacity: 1;
     background-color: #9d979748;
   }
 
+  .completed {
+    text-decoration: line-through;
+  }
+
   div {
     display: flex;
+    align-items: center;
 
-    span {
+    abbr {
+      min-width: 160px;
       font: 500 17px "Poppins";
       margin-left: 10px;
-
-      &.completed {
-        text-decoration: line-through;
-      }
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: calc(100vw - 300px);
+      text-decoration: none;
+      white-space: nowrap;
     }
   }
 
@@ -54,13 +72,5 @@
         }
       }
     }
-  }
-}
-
-@media (max-width: 280px) {
-  :host {
-    flex-direction: column;
-    justify-content: center;
-    padding: 0;
   }
 }

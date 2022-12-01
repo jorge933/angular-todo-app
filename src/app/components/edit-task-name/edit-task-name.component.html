@@ -1,18 +1,24 @@
-<form (submit)="$event.preventDefault()">
+<button mat-dialog-close><mat-icon> clear </mat-icon></button>
+
+<h1 mat-dialog-title>Edit Task</h1>
+<form>
   <div>
-    <mat-form-field>
-      <mat-label>Edit Task Name</mat-label>
-      <input [formControl]="newName" />
+    <mat-form-field floatLabel="always">
+      <mat-label> Task Name</mat-label>
+      <input matInput [formControl]="newNameControl" />
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    <button mat-dialog-close>Close</button>
     <button
-      type="submit"
-      [mat-dialog-close]="newName.value"
-      [disabled]="data === newName.value || !newName.value"
+      type="button"
+      color="primary"
+      mat-raised-button
+      [mat-dialog-close]="newNameControl.value"
+      [disabled]="data === newNameControl.value || !newNameControl.value"
     >
-      Edit
+      <mat-icon>save</mat-icon>
+      Save
     </button>
+    <button type="button" color="primary" mat-stroked-button>Cancel</button>
   </div>
 </form>

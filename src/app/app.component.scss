@@ -1,6 +1,22 @@
 :host {
   background-color: whitesmoke;
 
+  @media (max-width: 380px) {
+    form {
+      flex-direction: column;
+    }
+    mat-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    mat-list-item {
+      margin-top: 20px !important;
+      margin-bottom: 25px !important;
+    }
+  }
+
   header {
     display: flex;
     flex-direction: column;
@@ -13,39 +29,43 @@
       margin: 0;
       font: 700 25px "Poppins";
     }
+  }
+  form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 6px 5px #00000015;
+    border-radius: 5px;
 
-    form {
-      width: 80%;
+    div {
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px 0;
-      background-color: white;
-      box-shadow: 0px 0px 6px 5px #00000015;
-      border-radius: 5px;
+      max-width: 100%;
+      min-width: 100%;
 
       mat-form-field {
-        width: 80%;
+        width: 100%;
+        font-size: 20px;
       }
 
       button {
-        border: none;
-        border-radius: 5px;
-        background: linear-gradient(90deg, #f283a2, #ff5868);
-        padding: 10px 25px;
-        font: bold 15px "Poppins";
-        color: white;
-        cursor: pointer;
+        margin-left: 15px;
       }
     }
-  }
 
+    mat-error {
+      font-weight: 600;
+    }
+  }
   mat-list {
-    width: 80%;
-    margin: 30px auto 0 auto;
     background-color: white;
     padding: 0;
+    margin-top: 30px;
+    border-radius: 5px;
 
     &:has(mat-list-item) {
       padding: 5px 8px;
@@ -54,5 +74,8 @@
     mat-list-item {
       margin: 10px 0;
     }
+  }
+  section {
+    margin: 0px 20px;
   }
 }

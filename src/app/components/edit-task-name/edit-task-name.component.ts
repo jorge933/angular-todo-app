@@ -8,6 +8,6 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./edit-task-name.component.scss'],
 })
 export class EditTaskNameComponent {
-  newName = new FormControl(this.data);
+  newNameControl = new FormControl(this.data);
   constructor(@Inject(MAT_DIALOG_DATA) public data: string) {}
 }

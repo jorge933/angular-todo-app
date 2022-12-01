@@ -1,8 +1,10 @@
 <header>
   <h1>Todo-App</h1>
-
+</header>
+<section>
   <form (submit)="createTask($event)">
-    <mat-form-field>
+    <div>
+      <mat-form-field floatLabel="always">
       <mat-label>Type new task name...</mat-label>
       <input
         type="text"
@@ -26,3 +28,4 @@
     ></ta-task
   ></mat-list-item>
 </mat-list>
+</section>
