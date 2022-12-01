@@ -1,6 +1,6 @@
 :host {
   position: relative;
-  [mat-dialog-close] {
+  [mat-dialog-close].close-icon {
     position: absolute;
     right: 0;
     top: 1px;

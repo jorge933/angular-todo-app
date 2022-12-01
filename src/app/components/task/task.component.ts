@@ -1,8 +1,10 @@
+import { ComponentType } from '@angular/cdk/portal';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EditTaskNameComponent } from '@todo-app/components';
 import { Task } from '@todo-app/models';
+import { ConfirmDeleteTaskComponent } from '../confirm-delete-task/confirm-delete-task.component';
 
 @Component({
   selector: 'ta-task',
@@ -15,12 +17,14 @@ export class TaskComponent implements OnInit {
   checkBoxControl = new FormControl(false);
 
   @Input() task: Task;
+  @Input() buttonsDisabled: boolean = false;
 
   @Output() excludeTask = new EventEmitter<null>();
   @Output() editTaskName = new EventEmitter<string>();
   @Output() completedTask = new EventEmitter<null>();
 
   ngOnInit(): void {
+    if (this.buttonsDisabled) this.checkBoxControl.disable();
     const checkBoxControl = this.checkBoxControl;
 
     checkBoxControl.setValue(this.task.completed);
@@ -38,9 +42,11 @@ export class TaskComponent implements OnInit {
 
   openModalEditTaskName(): void {
     const taskName = this.task.name;
-    const dialogReference = this.dialog.open(EditTaskNameComponent, {
-      data: taskName,
-    });
+    const dialogConfig = { data: taskName };
+    const dialogReference = this.openDialog(
+      EditTaskNameComponent,
+      dialogConfig
+    );
 
     dialogReference.afterClosed().subscribe((newTaskName) => {
       if (newTaskName) {
@@ -48,6 +54,25 @@ export class TaskComponent implements OnInit {
         this.editTaskName.emit(newTaskName);
       }
     });
+  }
+
+  openConfirmDeleTaskModal() {
+    const dialogConfig = { data: this.task };
+    const dialogReference = this.openDialog(
+      ConfirmDeleteTaskComponent,
+      dialogConfig
+    );
+
+    dialogReference.afterClosed().subscribe((decision) => {
+      if (decision) {
+        this.excludeTask.emit();
+      }
+    });
+  }
+
+  openDialog(component: ComponentType<unknown>, config: MatDialogConfig = {}) {
+    const dialogReference = this.dialog.open(component, config);
+    return dialogReference;
   }
 
   changeCompletedTaskValue() {

@@ -1,14 +1,14 @@
-<div class="row">
+<div>
   <mat-checkbox color="primary" [formControl]="checkBoxControl"></mat-checkbox>
   <abbr [title]="task.name">
     <span [class.completed]="task.completed">{{ task.name }}</span>
   </abbr>
 </div>
 <div class="actions">
-  <button (click)="openModalEditTaskName()">
+  <button (click)="openModalEditTaskName()" [disabled]="buttonsDisabled">
     <mat-icon fontIcon="edit"></mat-icon>
   </button>
-  <button (click)="emitEvent('excludeTask')">
+  <button (click)="openConfirmDeleTaskModal()" [disabled]="buttonsDisabled">
     <mat-icon fontIcon="delete"></mat-icon>
   </button>
 </div>

@@ -7,6 +7,21 @@
   border-bottom: 1.5px solid #9d9797;
   opacity: 0.8;
 
+  &.buttons-disabled {
+    padding: 10px 0;
+    &:hover {
+      background: none;
+      opacity: 0.8;
+    }
+
+    .actions {
+      button:hover {
+        transform: scale(1);
+        cursor: initial;
+      }
+    }
+  }
+
   @media (max-width: 380px) {
     & {
       flex-direction: column;
