@@ -1,5 +1,34 @@
 :host {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 50vw;
+  max-width: 50vw;
+  min-height: 30vh;
+  max-height: 30vh;
+
+  h1 {
+    text-align: center;
+  }
+
+  mat-form-field {
+    min-width: 100%;
+    max-width: 100%;
+    font-size: 23px;
+
+    input {
+      min-width: 100%;
+      max-width: 100%;
+      font-size: 23px;
+    }
+  }
+
+  [mat-dialog-actions] {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+  }
+
   [mat-dialog-close].close-icon {
     position: absolute;
     right: 0;
