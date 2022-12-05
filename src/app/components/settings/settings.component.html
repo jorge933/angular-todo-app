@@ -1,14 +1,14 @@
 <h1 mat-dialog-title>Settings</h1>
 
-<div class="options">
-  <div class="option">
-    <span>Delete completed tasks on init application?</span>
+<form [formGroup]="settingsForm">
+  <div *ngFor="let key of settingsObjKeys" class="option">
+    <span>{{ optionsDescription[key] }}</span>
     <mat-slide-toggle
       color="primary"
-      [formControl]="slideToggleControl"
+      [formControlName]="key"
     ></mat-slide-toggle>
   </div>
-</div>
+</form>
 
 <div mat-dialog-actions>
   <button
