@@ -100,10 +100,11 @@ export class AppComponent {
     const dialogConfig = { data: settings };
     const dialogReference = this.dialog.open(SettingsComponent, dialogConfig);
 
-    dialogReference.afterClosed().subscribe((settings: Settings) => {
-      if (typeof settings === 'object') {
-        this.settings = settings;
-        const settingsInString = this.stringifyObj(settings);
+    dialogReference.afterClosed().subscribe((newSettings: Settings) => {
+      const settingsHasChanged = !Object.is(settings, newSettings);
+      if (settingsHasChanged) {
+        this.settings = newSettings;
+        const settingsInString = this.stringifyObj(newSettings);
         this.storageService.setItem('settings', settingsInString);
       }
     });
