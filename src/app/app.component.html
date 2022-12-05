@@ -1,5 +1,12 @@
 <header>
   <h1>Todo-App</h1>
+  <button
+    style="margin-bottom: 15px"
+    mat-stroked-button
+    (click)="openSettingsModal()"
+  >
+    <mat-icon>settings</mat-icon>
+  </button>
 </header>
 <section>
   <form (submit)="createTask($event)">
@@ -14,7 +21,7 @@
         />
       </mat-form-field>
       <button
-        mat-stroked-button
+        mat-raised-button
         color="primary"
         type="submit"
         [disabled]="

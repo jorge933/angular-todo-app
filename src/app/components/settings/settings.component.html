@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Settings</h1>
+
+<div class="options">
+  <div class="option">
+    <span>Delete completed tasks on init application?</span>
+    <mat-slide-toggle
+      color="primary"
+      [formControl]="slideToggleControl"
+    ></mat-slide-toggle>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button
+    type="button"
+    color="primary"
+    mat-raised-button
+    [mat-dialog-close]="settings"
+  >
+    <mat-icon>save</mat-icon>
+    Save
+  </button>
+  <button type="button" mat-stroked-button mat-dialog-close>Cancel</button>
+</div>

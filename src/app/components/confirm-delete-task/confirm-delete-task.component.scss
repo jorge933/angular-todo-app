@@ -15,4 +15,10 @@
   mat-dialog-actions {
     justify-content: right;
   }
+
+  ::ng-deep {
+    abbr {
+      max-width: 950px !important;
+    }
+  }
 }

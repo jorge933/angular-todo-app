@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  .option {
+    display: flex;
+    flex-direction: column;
+  }
+
+  mat-slide-toggle {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+}

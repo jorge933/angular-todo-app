@@ -1,0 +1,11 @@
+button {
+  background: none;
+  border: none;
+  font: 600 14px "Poppins";
+  cursor: pointer;
+  opacity: 0.8;
+
+  &:hover {
+    opacity: 1;
+  }
+}

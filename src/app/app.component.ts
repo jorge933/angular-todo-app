@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Task } from '@todo-app/models';
 import { StorageService } from '@todo-app/services';
+import { SettingsComponent } from './components/settings/settings.component';
+import { Settings } from './models/settings.model';
 
 @Component({
   selector: 'ta-root',
@@ -15,10 +18,25 @@ export class AppComponent {
   ]);
 
   tasksInCache = this.storageService.getItem('tasks');
+  settingsInCache = this.storageService.getItem('settings');
 
   tasks: Task[] = this.tasksInCache ? JSON.parse(this.tasksInCache) : [];
+  settings: Settings = this.settingsInCache
+    ? JSON.parse(this.settingsInCache)
+    : this.createSettingsObj();
 
-  constructor(private storageService: StorageService) {}
+  constructor(
+    private storageService: StorageService,
+    private readonly dialog: MatDialog
+  ) {}
+
+  ngOnInit() {
+    const { deleteCompletedTasks } = this.settings;
+    if (deleteCompletedTasks) {
+      const tasks = [...this.tasks.filter((task) => !task.completed)];
+      this.tasks = tasks;
+    }
+  }
 
   createTask(event: SubmitEvent) {
     event.preventDefault();
@@ -47,7 +65,6 @@ export class AppComponent {
       ...this.tasks.filter((task) => task.id !== taskToExclude.id),
     ];
     this.tasks = tasks;
-    this.saveTasksInLocalStorage();
   }
 
   editTaskName(newName: string, taskToEdit: Task) {
@@ -56,7 +73,7 @@ export class AppComponent {
   }
 
   private saveTasksInLocalStorage() {
-    const tasksStringify = JSON.stringify(this.tasks);
+    const tasksStringify = this.stringifyObj(this.tasks);
     this.storageService.setItem('tasks', tasksStringify);
   }
 
@@ -64,5 +81,31 @@ export class AppComponent {
     const newCompletedValue = !task.completed;
     task.completed = newCompletedValue;
     this.saveTasksInLocalStorage();
+  }
+
+  stringifyObj(object: Object) {
+    const objectInString = JSON.stringify(object);
+    return objectInString;
+  }
+
+  createSettingsObj() {
+    const settings = { deleteCompletedTasks: false };
+    const settingsInString = this.stringifyObj(settings);
+    this.storageService.setItem('settings', settingsInString);
+    return settings;
+  }
+
+  openSettingsModal() {
+    const settings = { ...this.settings };
+    const dialogConfig = { data: settings };
+    const dialogReference = this.dialog.open(SettingsComponent, dialogConfig);
+
+    dialogReference.afterClosed().subscribe((settings: Settings) => {
+      if (typeof settings === 'object') {
+        this.settings = settings;
+        const settingsInString = this.stringifyObj(settings);
+        this.storageService.setItem('settings', settingsInString);
+      }
+    });
   }
 }
