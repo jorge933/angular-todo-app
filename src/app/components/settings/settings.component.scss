@@ -1,12 +1,37 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 50vw;
+  max-width: 100vw;
+  min-height: 30vh;
+  max-height: 100vh;
+  padding: 0 20px;
+
+  h1 {
+    text-align: center;
+    font: 800 24px "Poppins";
+  }
+
   .option {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      font: 600 17px "Poppins";
+      padding-right: 20px;
+    }
   }
 
   mat-slide-toggle {
     margin-top: 15px;
     margin-bottom: 15px;
+  }
+
+  [mat-dialog-actions] {
+    display: flex;
+    justify-content: right;
+    align-items: center;
   }
 }
