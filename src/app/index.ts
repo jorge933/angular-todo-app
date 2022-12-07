@@ -5,6 +5,7 @@
 export * from "./app.component";
 export * from "./app.module";
 export * from "./components/index";
+export * from "./directives/index";
 export * from "./mocks/index";
 export * from "./models/index";
 export * from "./services/index";
