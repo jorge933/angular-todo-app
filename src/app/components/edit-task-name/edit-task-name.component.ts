@@ -9,5 +9,6 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class EditTaskNameComponent {
   newNameControl = new FormControl(this.data);
+  maxLength = 16;
   constructor(@Inject(MAT_DIALOG_DATA) public data: string) {}
 }
