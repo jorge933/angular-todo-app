@@ -12,9 +12,10 @@ import { Settings } from './models/settings.model';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  maxLength = 16;
   newTaskNameControl = new FormControl<string>('', [
     Validators.required,
-    Validators.maxLength(16),
+    Validators.maxLength(this.maxLength),
   ]);
 
   tasksInCache = this.storageService.getItem('tasks');

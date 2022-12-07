@@ -15,6 +15,8 @@ import { EditTaskNameComponent } from './components/edit-task-name/edit-task-nam
 import { TaskComponent } from './components/task/task.component';
 import { ConfirmDeleteTaskComponent } from './components/confirm-delete-task/confirm-delete-task.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { LimitCharactersInInputDirective } from './directives/limit-characters-in-input/limit-characters-in-input.directive';
+import { HotToastModule } from '@ngneat/hot-toast';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +24,7 @@ import { SettingsComponent } from './components/settings/settings.component';
     EditTaskNameComponent,
     ConfirmDeleteTaskComponent,
     SettingsComponent,
+    LimitCharactersInInputDirective,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +38,7 @@ import { SettingsComponent } from './components/settings/settings.component';
     MatButtonModule,
     MatCheckboxModule,
     MatSlideToggleModule,
+    HotToastModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
