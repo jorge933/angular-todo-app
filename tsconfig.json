@@ -8,7 +8,8 @@
       "@todo-app/mocks": ["app/mocks"],
       "@todo-app/models": ["app/models"],
       "@todo-app/services": ["app/services"],
-      "@todo-app/directives": ["app/directives"]
+      "@todo-app/directives": ["app/directives"],
+      "@todo-app/constants": ["app/constants"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
