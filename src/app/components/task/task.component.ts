@@ -2,9 +2,11 @@ import { ComponentType } from '@angular/cdk/portal';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { HotToastService } from '@ngneat/hot-toast';
 import { EditTaskNameComponent } from '@todo-app/components';
 import { Task } from '@todo-app/models';
-import { ConfirmDeleteTaskComponent } from '../confirm-delete-task/confirm-delete-task.component';
+import { ConfirmDeleteTaskComponent } from '@todo-app/components';
+import { HOT_TOAST_STYLES } from '@todo-app/constants';
 
 @Component({
   selector: 'ta-task',
@@ -12,8 +14,10 @@ import { ConfirmDeleteTaskComponent } from '../confirm-delete-task/confirm-delet
   styleUrls: ['./task.component.scss'],
 })
 export class TaskComponent implements OnInit {
-  constructor(private readonly dialog: MatDialog) {}
-
+  constructor(
+    private readonly dialog: MatDialog,
+    private readonly toastService: HotToastService
+  ) {}
   checkBoxControl = new FormControl(false);
 
   @Input() task: Task;
@@ -52,7 +56,11 @@ export class TaskComponent implements OnInit {
       if (newTaskName) {
         this.task.name = newTaskName;
         this.editTaskName.emit(newTaskName);
+        return;
       }
+      this.toastService.info('Unsaved Changes', {
+        style: HOT_TOAST_STYLES.info,
+      });
     });
   }
 
@@ -66,7 +74,11 @@ export class TaskComponent implements OnInit {
     dialogReference.afterClosed().subscribe((decision) => {
       if (decision) {
         this.excludeTask.emit();
+        return;
       }
+      this.toastService.info('Task Not Deleted', {
+        style: HOT_TOAST_STYLES.info,
+      });
     });
   }
 

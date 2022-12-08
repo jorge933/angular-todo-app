@@ -1,6 +1,7 @@
 import { Directive, Input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { HotToastService } from '@ngneat/hot-toast';
+import { HOT_TOAST_STYLES } from '@todo-app/constants';
 
 @Directive({
   selector: '[taLimitCharactersInInput]',
@@ -22,13 +23,7 @@ export class LimitCharactersInInputDirective {
 
         this.toastService.error(
           `Task Name Must Be A Maximum Length Of ${maxLength} Characters`,
-          {
-            style: {
-              backgroundColor: '#f70d0d',
-              color: 'white',
-              fontWeight: 500,
-            },
-          }
+          { style: HOT_TOAST_STYLES.error }
         );
       }
     });

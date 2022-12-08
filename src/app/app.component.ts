@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { HotToastService } from '@ngneat/hot-toast';
 import { Task } from '@todo-app/models';
 import { StorageService } from '@todo-app/services';
-import { SettingsComponent } from './components/settings/settings.component';
-import { Settings } from './models/settings.model';
+import { SettingsComponent } from '@todo-app/components';
+import { Settings } from '@todo-app/models';
+import { HOT_TOAST_STYLES } from '@todo-app/constants';
 
 @Component({
   selector: 'ta-root',
@@ -27,8 +29,9 @@ export class AppComponent {
     : this.createSettingsObj();
 
   constructor(
-    private storageService: StorageService,
-    private readonly dialog: MatDialog
+    private readonly storageService: StorageService,
+    private readonly dialog: MatDialog,
+    private readonly toastService: HotToastService
   ) {}
 
   ngOnInit() {
@@ -46,6 +49,10 @@ export class AppComponent {
     this.saveTasksInLocalStorage();
 
     this.newTaskNameControl.reset();
+
+    this.toastService.success('Task Created Successfully', {
+      style: HOT_TOAST_STYLES.success,
+    });
   }
 
   private createTaskModel() {
@@ -66,11 +73,17 @@ export class AppComponent {
       ...this.tasks.filter((task) => task.id !== taskToExclude.id),
     ];
     this.tasks = tasks;
+    this.toastService.success('Task Deleted Successfully', {
+      style: HOT_TOAST_STYLES.success,
+    });
   }
 
   editTaskName(newName: string, taskToEdit: Task) {
     taskToEdit.name = newName;
     this.saveTasksInLocalStorage();
+    this.toastService.success('Saved Changes', {
+      style: HOT_TOAST_STYLES.success,
+    });
   }
 
   private saveTasksInLocalStorage() {
@@ -102,12 +115,18 @@ export class AppComponent {
     const dialogReference = this.dialog.open(SettingsComponent, dialogConfig);
 
     dialogReference.afterClosed().subscribe((newSettings: Settings) => {
+      const isObject = typeof newSettings === 'object';
       const settingsHasChanged = !Object.is(settings, newSettings);
-      if (settingsHasChanged) {
+      if (isObject && settingsHasChanged) {
         this.settings = newSettings;
         const settingsInString = this.stringifyObj(newSettings);
         this.storageService.setItem('settings', settingsInString);
+        this.toastService.success('Saved Changes');
+        return;
       }
+      this.toastService.info('Unsaved Changes', {
+        style: HOT_TOAST_STYLES.info,
+      });
     });
   }
 }
