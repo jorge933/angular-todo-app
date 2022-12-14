@@ -7,6 +7,7 @@ import { StorageService } from '@todo-app/services';
 import { SettingsComponent } from '@todo-app/components';
 import { Settings } from '@todo-app/models';
 import { HOT_TOAST_STYLES } from '@todo-app/constants';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'ta-root',
@@ -23,7 +24,8 @@ export class AppComponent {
   tasksInCache = this.storageService.getItem('tasks');
   settingsInCache = this.storageService.getItem('settings');
 
-  tasks: Task[] = this.tasksInCache ? JSON.parse(this.tasksInCache) : [];
+  tasksParsed = this.tasksInCache ? JSON.parse(this.tasksInCache) : [];
+  tasks$ = new BehaviorSubject<Task[]>(this.tasksParsed);
   settings: Settings = this.settingsInCache
     ? JSON.parse(this.settingsInCache)
     : this.createSettingsObj();
@@ -36,9 +38,10 @@ export class AppComponent {
 
   ngOnInit() {
     const { deleteCompletedTasks } = this.settings;
+    this.tasks$.subscribe(this.saveTasksInLocalStorage);
     if (deleteCompletedTasks) {
-      const tasks = [...this.tasks.filter((task) => !task.completed)];
-      this.tasks = tasks;
+      const tasks = [...this.tasks$.value.filter((task) => !task.completed)];
+      this.tasks$.next(tasks);
     }
   }
 
@@ -59,42 +62,50 @@ export class AppComponent {
     const id = this.generateId();
     const name = this.newTaskNameControl.value as string;
     const task = { id, name, completed: false };
-    this.tasks.push(task);
+    this.tasks$.value.push(task);
   }
 
   private generateId() {
-    const lastTask = this.tasks[this.tasks.length - 1];
+    const tasks = this.tasks$.getValue();
+    const lastTask = tasks[tasks.length - 1];
     const id = lastTask?.id + 1 || 1;
     return id;
   }
 
   excludeTask(taskToExclude: Task) {
     const tasks = [
-      ...this.tasks.filter((task) => task.id !== taskToExclude.id),
+      ...this.tasks$.value.filter((task) => task.id !== taskToExclude.id),
     ];
-    this.tasks = tasks;
+    this.tasks$.next(tasks);
+
     this.toastService.success('Task Deleted Successfully', {
       style: HOT_TOAST_STYLES.success,
     });
   }
 
-  editTaskName(newName: string, taskToEdit: Task) {
-    taskToEdit.name = newName;
-    this.saveTasksInLocalStorage();
+  editTaskName(newName: string, index: number) {
+    const tasks = this.tasks$.getValue();
+    tasks[index].name = newName;
+    this.tasks$.next(tasks);
+
     this.toastService.success('Saved Changes', {
       style: HOT_TOAST_STYLES.success,
     });
   }
 
   private saveTasksInLocalStorage() {
-    const tasksStringify = this.stringifyObj(this.tasks);
+    const tasks = this.tasks$?.getValue();
+    if (!tasks) return;
+    const tasksStringify = this.stringifyObj(tasks);
     this.storageService.setItem('tasks', tasksStringify);
   }
 
-  completedTask(task: Task) {
+  completedTask(index: number) {
+    const tasks = this.tasks$.getValue();
+    const task = tasks[index];
     const newCompletedValue = !task.completed;
     task.completed = newCompletedValue;
-    this.saveTasksInLocalStorage();
+    this.tasks$.next(tasks);
   }
 
   stringifyObj(object: Object) {

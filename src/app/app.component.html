@@ -36,12 +36,12 @@
   </form>
   <div class="tasks"></div>
   <mat-list class="tasks">
-    <mat-list-item *ngFor="let task of tasks"
+    <mat-list-item *ngFor="let task of tasks$ | async; let i = index"
       ><ta-task
         [task]="task"
         (excludeTask)="excludeTask(task)"
-        (editTaskName)="editTaskName($event, task)"
-        (completedTask)="completedTask(task)"
+        (editTaskName)="editTaskName($event, i)"
+        (completedTask)="completedTask(i)"
       ></ta-task
     ></mat-list-item>
   </mat-list>
