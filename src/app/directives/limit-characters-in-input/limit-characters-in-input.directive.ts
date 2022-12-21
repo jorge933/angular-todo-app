@@ -4,13 +4,13 @@ import { HotToastService } from '@ngneat/hot-toast';
 import { HOT_TOAST_STYLES } from '@todo-app/constants';
 
 @Directive({
-  selector: '[taLimitCharactersInInput]',
+  selector: '[taLimitCharactersInInput],[maxLengthInput]',
 })
 export class LimitCharactersInInputDirective {
   @Input() formControl: AbstractControl;
   @Input() maxLengthInput: number;
 
-  constructor(private toastService: HotToastService) {}
+  constructor(private readonly toastService: HotToastService) {}
 
   ngOnInit(): void {
     this.formControl.valueChanges.subscribe((value: string) => {
@@ -23,7 +23,7 @@ export class LimitCharactersInInputDirective {
 
         this.toastService.error(
           `Task Name Must Be A Maximum Length Of ${maxLength} Characters`,
-          { style: HOT_TOAST_STYLES.error }
+          { style: HOT_TOAST_STYLES.error, id: 'max-length-toast' }
         );
       }
     });

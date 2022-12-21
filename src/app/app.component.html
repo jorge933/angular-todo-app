@@ -4,36 +4,37 @@
     <mat-icon>settings</mat-icon>
   </button>
 </header>
+
 <section>
   <form (submit)="createTask($event)">
     <div>
       <mat-form-field floatLabel="always">
         <mat-label>Type new task name...</mat-label>
+
         <input
           type="text"
           matInput
           [formControl]="newTaskNameControl"
           placeholder="Ex. Read"
           [maxLengthInput]="maxLength"
-          taLimitCharactersInInput
         />
       </mat-form-field>
+
       <button
         mat-raised-button
         color="primary"
         type="submit"
-        [disabled]="
-          this.newTaskNameControl.hasError('required') ||
-          this.newTaskNameControl.hasError('maxlength')
-        "
+        [disabled]="buttonDisabledCondition"
       >
-        <span>&#43; </span>
+        <span>&#43;</span>
       </button>
     </div>
+
     <mat-error *ngIf="newTaskNameControl.hasError('maxlength')">
       Name must be less than 16 letters
     </mat-error>
   </form>
+
   <div class="tasks"></div>
   <mat-list class="tasks">
     <mat-list-item *ngFor="let task of tasks$ | async; let i = index"

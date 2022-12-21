@@ -45,6 +45,13 @@ export class AppComponent {
     }
   }
 
+  get buttonDisabledCondition() {
+    return (
+      this.newTaskNameControl.hasError('required') ||
+      this.newTaskNameControl.hasError('maxlength')
+    );
+  }
+
   createTask(event: SubmitEvent) {
     event.preventDefault();
 
