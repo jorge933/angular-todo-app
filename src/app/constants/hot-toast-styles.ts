@@ -1,6 +1,6 @@
 export const HOT_TOAST_STYLES = {
   success: {
-    backgroundColor: '#48dd04',
+    backgroundColor: '#52d915',
     color: 'white',
     fontSize: '18px',
     fontWeight: 500,
