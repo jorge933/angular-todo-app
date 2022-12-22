@@ -17,7 +17,7 @@ export class LimitCharactersInInputDirective {
       const { maxLengthInput: maxLength } = this;
       const charactersExceedingTheMaxLength = value.length > maxLength;
 
-      if (charactersExceedingTheMaxLength) {
+      if (value && charactersExceedingTheMaxLength) {
         const valueSliced = value.slice(0, maxLength);
         this.formControl.setValue(valueSliced);
 
