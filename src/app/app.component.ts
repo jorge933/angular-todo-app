@@ -29,6 +29,9 @@ export class AppComponent {
   settings: Settings = this.settingsInCache
     ? JSON.parse(this.settingsInCache)
     : this.createSettingsObj();
+  tasksParsed = this.tasksInCache ? JSON.parse(this.tasksInCache) : [];
+
+  tasks$$ = new BehaviorSubject<Task[]>(this.tasksParsed);
 
   constructor(
     private readonly storageService: StorageService,
@@ -37,12 +40,13 @@ export class AppComponent {
   ) {}
 
   ngOnInit() {
-    const { deleteCompletedTasks } = this.settings;
-    this.tasks$.subscribe(this.saveTasksInLocalStorage);
+    const { deleteCompletedTasks } = this.settings$$.value;
     if (deleteCompletedTasks) {
-      const tasks = [...this.tasks$.value.filter((task) => !task.completed)];
-      this.tasks$.next(tasks);
+      const tasks = [...this.tasks$$.value.filter((task) => !task.completed)];
+      this.tasks$$.next(tasks);
     }
+
+    this.tasks$$.subscribe(this.saveTasksInLocalStorage);
   }
 
   get buttonDisabledCondition() {
@@ -69,11 +73,13 @@ export class AppComponent {
     const id = this.generateId();
     const name = this.newTaskNameControl.value as string;
     const task = { id, name, completed: false };
-    this.tasks$.value.push(task);
+    const tasks = this.tasks$$.value;
+    tasks.push(task);
+    this.tasks$$.next(tasks);
   }
 
   private generateId() {
-    const tasks = this.tasks$.value;
+    const tasks = this.tasks$$.value;
     const lastTask = tasks[tasks.length - 1];
     const id = lastTask?.id + 1 || 1;
     return id;
@@ -81,9 +87,9 @@ export class AppComponent {
 
   excludeTask(taskToExclude: Task) {
     const tasks = [
-      ...this.tasks$.value.filter((task) => task.id !== taskToExclude.id),
+      ...this.tasks$$.value.filter((task) => task.id !== taskToExclude.id),
     ];
-    this.tasks$.next(tasks);
+    this.tasks$$.next(tasks);
 
     this.toastService.success('Task Deleted Successfully', {
       style: HOT_TOAST_STYLES.success,
@@ -91,9 +97,9 @@ export class AppComponent {
   }
 
   editTaskName(newName: string, index: number) {
-    const tasks = this.tasks$.value;
+    const tasks = this.tasks$$.value;
     tasks[index].name = newName;
-    this.tasks$.next(tasks);
+    this.tasks$$.next(tasks);
 
     this.toastService.success('Saved Changes', {
       style: HOT_TOAST_STYLES.success,
@@ -101,23 +107,18 @@ export class AppComponent {
   }
 
   private saveTasksInLocalStorage() {
-    const tasks = this.tasks$?.value;
+    const tasks = this.tasks$$?.value;
     if (!tasks) return;
     const tasksStringify = this.stringifyObj(tasks);
     this.storageService.setItem('tasks', tasksStringify);
   }
 
   completedTask(index: number) {
-    const tasks = this.tasks$.value;
+    const tasks = this.tasks$$.value;
     const task = tasks[index];
     const newCompletedValue = !task.completed;
     task.completed = newCompletedValue;
-    this.tasks$.next(tasks);
-  }
-
-  stringifyObj(object: Object) {
-    const objectInString = JSON.stringify(object);
-    return objectInString;
+    this.tasks$$.next(tasks);
   }
 
   createSettingsObj() {
@@ -128,7 +129,7 @@ export class AppComponent {
   }
 
   openSettingsModal() {
-    const settings = { ...this.settings };
+    const settings = { ...this.settings$$.value };
     const dialogConfig = { data: settings };
     const dialogReference = this.dialog.open(SettingsComponent, dialogConfig);
 
@@ -136,10 +137,7 @@ export class AppComponent {
       const isObject = typeof newSettings === 'object';
       const settingsHasChanged = !Object.is(settings, newSettings);
       if (isObject && settingsHasChanged) {
-        this.settings = newSettings;
-        const settingsInString = this.stringifyObj(newSettings);
-        this.storageService.setItem('settings', settingsInString);
-        this.toastService.success('Saved Changes');
+        this.settings$$.next(newSettings);
         return;
       }
       this.toastService.info('Unsaved Changes', {

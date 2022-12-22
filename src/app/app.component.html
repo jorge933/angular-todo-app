@@ -37,7 +37,7 @@
 
   <div class="tasks"></div>
   <mat-list class="tasks">
-    <mat-list-item *ngFor="let task of tasks$ | async; let i = index"
+    <mat-list-item *ngFor="let task of tasks$$ | async; let i = index"
       ><ta-task
         [task]="task"
         (excludeTask)="excludeTask(task)"
