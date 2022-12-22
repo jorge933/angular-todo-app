@@ -26,14 +26,4 @@
     align-items: center;
     justify-content: right;
   }
-
-  [mat-dialog-close].close-icon {
-    position: absolute;
-    right: 0;
-    top: 1px;
-    background: none;
-    border: none;
-    font: 600 14px "Poppins";
-    cursor: pointer;
-  }
 }

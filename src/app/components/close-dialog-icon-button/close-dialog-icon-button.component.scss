@@ -1,0 +1,16 @@
+:host {
+  position: absolute;
+  right: 0;
+  top: 1px;
+  [mat-dialog-close].close-icon {
+    background: none;
+    border: none;
+    font: 600 14px "Poppins";
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      transform: scale(1.4);
+    }
+  }
+}

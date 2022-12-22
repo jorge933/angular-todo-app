@@ -17,6 +17,7 @@ import { ConfirmDeleteTaskComponent } from './components/confirm-delete-task/con
 import { SettingsComponent } from './components/settings/settings.component';
 import { LimitCharactersInInputDirective } from './directives/limit-characters-in-input/limit-characters-in-input.directive';
 import { HotToastModule } from '@ngneat/hot-toast';
+import { CloseDialogIconButtonComponent } from './components/close-dialog-icon-button/close-dialog-icon-button.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +26,7 @@ import { HotToastModule } from '@ngneat/hot-toast';
     ConfirmDeleteTaskComponent,
     SettingsComponent,
     LimitCharactersInInputDirective,
+    CloseDialogIconButtonComponent,
   ],
   imports: [
     BrowserModule,
