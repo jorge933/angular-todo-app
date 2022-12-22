@@ -73,7 +73,7 @@ export class AppComponent {
   }
 
   private generateId() {
-    const tasks = this.tasks$.getValue();
+    const tasks = this.tasks$.value;
     const lastTask = tasks[tasks.length - 1];
     const id = lastTask?.id + 1 || 1;
     return id;
@@ -91,7 +91,7 @@ export class AppComponent {
   }
 
   editTaskName(newName: string, index: number) {
-    const tasks = this.tasks$.getValue();
+    const tasks = this.tasks$.value;
     tasks[index].name = newName;
     this.tasks$.next(tasks);
 
@@ -101,14 +101,14 @@ export class AppComponent {
   }
 
   private saveTasksInLocalStorage() {
-    const tasks = this.tasks$?.getValue();
+    const tasks = this.tasks$?.value;
     if (!tasks) return;
     const tasksStringify = this.stringifyObj(tasks);
     this.storageService.setItem('tasks', tasksStringify);
   }
 
   completedTask(index: number) {
-    const tasks = this.tasks$.getValue();
+    const tasks = this.tasks$.value;
     const task = tasks[index];
     const newCompletedValue = !task.completed;
     task.completed = newCompletedValue;
