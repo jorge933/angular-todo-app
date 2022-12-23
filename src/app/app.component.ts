@@ -24,14 +24,13 @@ export class AppComponent {
   tasksInCache = this.storageService.getItem('tasks');
   settingsInCache = this.storageService.getItem('settings');
 
-  tasksParsed = this.tasksInCache ? JSON.parse(this.tasksInCache) : [];
-  tasks$ = new BehaviorSubject<Task[]>(this.tasksParsed);
-  settings: Settings = this.settingsInCache
+  settingsParsed: Settings = this.settingsInCache
     ? JSON.parse(this.settingsInCache)
     : this.createSettingsObj();
   tasksParsed = this.tasksInCache ? JSON.parse(this.tasksInCache) : [];
 
   tasks$$ = new BehaviorSubject<Task[]>(this.tasksParsed);
+  settings$$ = new BehaviorSubject<Settings>(this.settingsParsed);
 
   constructor(
     private readonly storageService: StorageService,
@@ -47,6 +46,7 @@ export class AppComponent {
     }
 
     this.tasks$$.subscribe(this.saveTasksInLocalStorage);
+    this.settings$$.subscribe(this.saveSettingsInLocalStorage);
   }
 
   get buttonDisabledCondition() {
@@ -145,4 +145,12 @@ export class AppComponent {
       });
     });
   }
+
+  saveSettingsInLocalStorage() {
+    const settings = this.settings$$?.value;
+    if (!settings) return;
+    const tasksStringify = JSON.stringify(settings);
+    this.storageService.setItem('tasks', tasksStringify);
+  }
+
 }
