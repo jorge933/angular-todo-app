@@ -9,15 +9,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 import { AppComponent } from './app.component';
-import { EditTaskNameComponent } from './components/edit-task-name/edit-task-name.component';
-import { TaskComponent } from './components/task/task.component';
-import { ConfirmDeleteTaskComponent } from './components/confirm-delete-task/confirm-delete-task.component';
-import { SettingsComponent } from './components/settings/settings.component';
-import { LimitCharactersInInputDirective } from './directives/limit-characters-in-input/limit-characters-in-input.directive';
-import { HotToastModule } from '@ngneat/hot-toast';
-import { CloseDialogIconButtonComponent } from './components/close-dialog-icon-button/close-dialog-icon-button.component';
+import { EditTaskNameComponent } from '@todo-app/components';
+import { TaskComponent } from '@todo-app/components';
+import { ConfirmDeleteTaskComponent } from '@todo-app/components';
+import { SettingsComponent } from '@todo-app/components';
+import { LimitCharactersInInputDirective } from '@todo-app/directives';
+import { CloseDialogIconButtonComponent } from '@todo-app/components';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +43,7 @@ import { CloseDialogIconButtonComponent } from './components/close-dialog-icon-b
     MatCheckboxModule,
     MatSlideToggleModule,
     HotToastModule.forRoot(),
+    NgxPaginationModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

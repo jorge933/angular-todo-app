@@ -35,15 +35,25 @@
     </mat-error>
   </form>
 
-  <div class="tasks"></div>
-  <mat-list class="tasks">
-    <mat-list-item *ngFor="let task of tasks$$ | async; let i = index"
-      ><ta-task
-        [task]="task"
-        (excludeTask)="excludeTask(task)"
-        (editTaskName)="editTaskName($event, i)"
-        (completedTask)="completedTask(i)"
-      ></ta-task
-    ></mat-list-item>
-  </mat-list>
+  <div class="tasks" *ngIf="tasks$$ | async as tasks">
+    <mat-list class="tasks" *ngIf="tasks.length >= 1">
+      <mat-list-item
+        *ngFor="
+          let task of tasks | paginate : ngxPaginationConfig;
+          let index = index
+        "
+        ><ta-task
+          [task]="task"
+          (excludeTask)="excludeTask(task)"
+          (editTaskName)="editTaskName($event, index)"
+          (completedTask)="completedTask(index)"
+        ></ta-task
+      ></mat-list-item>
+    </mat-list>
+    <pagination-controls
+      *ngIf="tasks.length >= 1"
+      (pageChange)="changePage($event)"
+      id="tasks-pagination"
+    ></pagination-controls>
+  </div>
 </section>

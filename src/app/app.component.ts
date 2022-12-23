@@ -17,6 +17,11 @@ import { Keys, ObjectType } from '@todo-app/models';
 })
 export class AppComponent {
   maxLength = 16;
+  ngxPaginationConfig = {
+    id: 'tasks-pagination',
+    itemsPerPage: 10,
+    currentPage: 1,
+  };
   newTaskNameControl = new FormControl<string>('', [
     Validators.required,
     Validators.maxLength(this.maxLength),
@@ -166,5 +171,9 @@ export class AppComponent {
       (key) => oldObject[key] !== newObject[key]
     );
     return objectHasChanges;
+  }
+
+  changePage(newPage: number) {
+    this.ngxPaginationConfig.currentPage = newPage;
   }
 }
