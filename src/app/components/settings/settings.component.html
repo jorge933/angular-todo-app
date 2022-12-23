@@ -18,6 +18,7 @@
     color="primary"
     mat-raised-button
     [mat-dialog-close]="settings"
+    [disabled]="settings$$.value === settings"
   >
     <mat-icon>save</mat-icon>
     Save
