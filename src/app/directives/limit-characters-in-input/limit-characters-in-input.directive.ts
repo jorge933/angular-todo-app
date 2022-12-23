@@ -14,10 +14,11 @@ export class LimitCharactersInInputDirective {
 
   ngOnInit(): void {
     this.formControl.valueChanges.subscribe((value: string) => {
+      if (!value) return;
       const { maxLengthInput: maxLength } = this;
       const charactersExceedingTheMaxLength = value.length > maxLength;
 
-      if (value && charactersExceedingTheMaxLength) {
+      if (charactersExceedingTheMaxLength) {
         const valueSliced = value.slice(0, maxLength);
         this.formControl.setValue(valueSliced);
 
