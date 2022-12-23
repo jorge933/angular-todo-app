@@ -8,6 +8,7 @@ import { SettingsComponent } from '@todo-app/components';
 import { Settings } from '@todo-app/models';
 import { HOT_TOAST_STYLES } from '@todo-app/constants';
 import { BehaviorSubject } from 'rxjs';
+import { Keys, ObjectType } from '@todo-app/models';
 
 @Component({
   selector: 'ta-root',
@@ -135,7 +136,8 @@ export class AppComponent {
 
     dialogReference.afterClosed().subscribe((newSettings: Settings) => {
       const isObject = typeof newSettings === 'object';
-      const settingsHasChanged = !Object.is(settings, newSettings);
+      const settingsHasChanged = this.objectHasChanges(settings, newSettings);
+
       if (isObject && settingsHasChanged) {
         this.settings$$.next(newSettings);
 
@@ -157,4 +159,12 @@ export class AppComponent {
     this.storageService.setItem('tasks', tasksStringify);
   }
 
+  objectHasChanges(oldObject: ObjectType, newObject: ObjectType) {
+    const keys = Object.keys(oldObject) as Keys;
+
+    const objectHasChanges = keys.every(
+      (key) => oldObject[key] !== newObject[key]
+    );
+    return objectHasChanges;
+  }
 }
