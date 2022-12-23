@@ -1,5 +1,5 @@
 import { Directive, Input } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, NgControl } from '@angular/forms';
 import { HotToastService } from '@ngneat/hot-toast';
 import { HOT_TOAST_STYLES } from '@todo-app/constants';
 
@@ -7,20 +7,23 @@ import { HOT_TOAST_STYLES } from '@todo-app/constants';
   selector: '[taLimitCharactersInInput],[maxLengthInput]',
 })
 export class LimitCharactersInInputDirective {
-  @Input() formControl: AbstractControl;
   @Input() maxLengthInput: number;
 
-  constructor(private readonly toastService: HotToastService) {}
+  constructor(
+    private readonly toastService: HotToastService,
+    private readonly ngControl: NgControl
+  ) {}
 
-  ngOnInit(): void {
-    this.formControl.valueChanges.subscribe((value: string) => {
+  ngOnInit() {
+    const { control } = this.ngControl;
+    control!.valueChanges.subscribe((value: string) => {
       if (!value) return;
       const { maxLengthInput: maxLength } = this;
       const charactersExceedingTheMaxLength = value.length > maxLength;
 
       if (charactersExceedingTheMaxLength) {
         const valueSliced = value.slice(0, maxLength);
-        this.formControl.setValue(valueSliced);
+        control!.setValue(valueSliced);
 
         this.toastService.error(
           `Task Name Must Be A Maximum Length Of ${maxLength} Characters`,
