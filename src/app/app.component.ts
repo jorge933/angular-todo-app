@@ -107,19 +107,26 @@ export class AppComponent {
     });
   }
 
-  private saveTasksInLocalStorage() {
-    const tasks = this.tasks$$?.value;
-    if (!tasks) return;
-    const tasksStringify = JSON.stringify(tasks);
-    this.storageService.setItem('tasks', tasksStringify);
-  }
-
   completedTask(index: number) {
     const tasks = this.tasks$$.value;
     const task = tasks[index];
     const newCompletedValue = !task.completed;
     task.completed = newCompletedValue;
     this.tasks$$.next(tasks);
+  }
+
+  saveTasksInLocalStorage() {
+    const tasks = this.tasks$$?.value;
+    if (!tasks) return;
+    const tasksStringify = JSON.stringify(tasks);
+    this.storageService.setItem('tasks', tasksStringify);
+  }
+
+  saveSettingsInLocalStorage() {
+    const settings = this.settings$$?.value;
+    if (!settings) return;
+    const tasksStringify = JSON.stringify(settings);
+    this.storageService.setItem('tasks', tasksStringify);
   }
 
   createSettingsObj() {
@@ -150,13 +157,6 @@ export class AppComponent {
         style: HOT_TOAST_STYLES.info,
       });
     });
-  }
-
-  saveSettingsInLocalStorage() {
-    const settings = this.settings$$?.value;
-    if (!settings) return;
-    const tasksStringify = JSON.stringify(settings);
-    this.storageService.setItem('tasks', tasksStringify);
   }
 
   objectHasChanges(oldObject: ObjectType, newObject: ObjectType) {
