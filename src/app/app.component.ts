@@ -109,7 +109,7 @@ export class AppComponent {
   private saveTasksInLocalStorage() {
     const tasks = this.tasks$$?.value;
     if (!tasks) return;
-    const tasksStringify = this.stringifyObj(tasks);
+    const tasksStringify = JSON.stringify(tasks);
     this.storageService.setItem('tasks', tasksStringify);
   }
 
@@ -123,7 +123,7 @@ export class AppComponent {
 
   createSettingsObj() {
     const settings = { deleteCompletedTasks: false };
-    const settingsInString = this.stringifyObj(settings);
+    const settingsInString = JSON.stringify(settings);
     this.storageService.setItem('settings', settingsInString);
     return settings;
   }
