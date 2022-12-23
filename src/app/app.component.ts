@@ -138,6 +138,10 @@ export class AppComponent {
       const settingsHasChanged = !Object.is(settings, newSettings);
       if (isObject && settingsHasChanged) {
         this.settings$$.next(newSettings);
+
+        this.toastService.success('Saved Changes', {
+          style: HOT_TOAST_STYLES.success,
+        });
         return;
       }
       this.toastService.info('Unsaved Changes', {
