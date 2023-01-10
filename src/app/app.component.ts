@@ -2,13 +2,11 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { HotToastService } from '@ngneat/hot-toast';
-import { Task } from '@todo-app/models';
-import { StorageService } from '@todo-app/services';
 import { SettingsComponent } from '@todo-app/components';
-import { Settings } from '@todo-app/models';
 import { HOT_TOAST_STYLES } from '@todo-app/constants';
+import { Keys, ObjectType, Settings, Task } from '@todo-app/models';
+import { StorageService } from '@todo-app/services';
 import { BehaviorSubject } from 'rxjs';
-import { Keys, ObjectType } from '@todo-app/models';
 
 @Component({
   selector: 'ta-root',
@@ -51,8 +49,8 @@ export class AppComponent {
       this.tasks$$.next(tasks);
     }
 
-    this.tasks$$.subscribe(this.saveTasksInLocalStorage);
-    this.settings$$.subscribe(this.saveSettingsInLocalStorage);
+    this.tasks$$.subscribe(this.saveTasksInLocalStorage.bind(this));
+    this.settings$$.subscribe(this.saveSettingsInLocalStorage.bind(this));
   }
 
   get buttonDisabledCondition() {
@@ -66,7 +64,6 @@ export class AppComponent {
     event.preventDefault();
 
     this.createTaskModel();
-    this.saveTasksInLocalStorage();
 
     this.newTaskNameControl.reset();
 

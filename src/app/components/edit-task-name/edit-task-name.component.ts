@@ -11,4 +11,12 @@ export class EditTaskNameComponent {
   newNameControl = new FormControl(this.data);
   maxLength = 16;
   constructor(@Inject(MAT_DIALOG_DATA) public data: string) {}
+
+  get disableCondition() {
+    return (
+      this.data === this.newNameControl.value ||
+      !this.newNameControl.value ||
+      this.newNameControl.value.length > this.maxLength
+    );
+  }
 }

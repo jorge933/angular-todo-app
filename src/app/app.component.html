@@ -10,7 +10,6 @@
     <div>
       <mat-form-field floatLabel="always">
         <mat-label>Type new task name...</mat-label>
-
         <input
           type="text"
           matInput
@@ -19,7 +18,6 @@
           [maxLengthInput]="maxLength"
         />
       </mat-form-field>
-
       <button
         mat-raised-button
         color="primary"
@@ -29,7 +27,6 @@
         <span>&#43;</span>
       </button>
     </div>
-
     <mat-error *ngIf="newTaskNameControl.hasError('maxlength')">
       Name must be less than 16 letters
     </mat-error>

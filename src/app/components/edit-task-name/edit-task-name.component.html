@@ -19,11 +19,7 @@
       color="primary"
       mat-raised-button
       [mat-dialog-close]="newNameControl.value"
-      [disabled]="
-        data === newNameControl.value ||
-        !newNameControl.value ||
-        newNameControl.value.length > maxLength
-      "
+      [disabled]="disableCondition"
     >
       <mat-icon>save</mat-icon>
       Save
