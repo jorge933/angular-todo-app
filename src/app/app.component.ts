@@ -60,9 +60,7 @@ export class AppComponent {
     );
   }
 
-  createTask(event: SubmitEvent) {
-    event.preventDefault();
-
+  createTask() {
     this.createTaskModel();
 
     this.newTaskNameControl.reset();

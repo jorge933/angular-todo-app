@@ -6,7 +6,7 @@
 </header>
 
 <section>
-  <form (submit)="createTask($event)">
+  <form>
     <div>
       <mat-form-field floatLabel="always">
         <mat-label>Type new task name...</mat-label>
@@ -16,12 +16,14 @@
           [formControl]="newTaskNameControl"
           placeholder="Ex. Read"
           [maxLengthInput]="maxLength"
+          (keyup.enter)="createTask()"
         />
       </mat-form-field>
       <button
         mat-raised-button
         color="primary"
-        type="submit"
+        type="button"
+        (click)="createTask()"
         [disabled]="buttonDisabledCondition"
       >
         <span>&#43;</span>
