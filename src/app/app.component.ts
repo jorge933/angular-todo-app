@@ -49,8 +49,12 @@ export class AppComponent {
       this.tasks$$.next(tasks);
     }
 
-    this.tasks$$.subscribe(this.saveTasksInLocalStorage.bind(this));
-    this.settings$$.subscribe(this.saveSettingsInLocalStorage.bind(this));
+    this.tasks$$.subscribe((tasks: Task[]) =>
+      this.saveTasksInLocalStorage.apply(this, [tasks])
+    );
+    this.settings$$.subscribe((settings: Settings) =>
+      this.saveSettingsInLocalStorage.apply(this, [settings])
+    );
   }
 
   get buttonDisabledCondition() {
@@ -61,6 +65,11 @@ export class AppComponent {
   }
 
   createTask() {
+    const { valid, value } = this.newTaskNameControl;
+    const trimValue = value?.trim();
+
+    if (!valid || !trimValue) return;
+
     this.createTaskModel();
 
     this.newTaskNameControl.reset();
@@ -115,18 +124,14 @@ export class AppComponent {
     this.tasks$$.next(tasks);
   }
 
-  saveTasksInLocalStorage() {
-    const tasks = this.tasks$$?.value;
-    if (!tasks) return;
+  saveTasksInLocalStorage(tasks: Task[]) {
     const tasksStringify = JSON.stringify(tasks);
     this.storageService.setItem('tasks', tasksStringify);
   }
 
-  saveSettingsInLocalStorage() {
-    const settings = this.settings$$?.value;
-    if (!settings) return;
+  saveSettingsInLocalStorage(settings: Settings) {
     const tasksStringify = JSON.stringify(settings);
-    this.storageService.setItem('tasks', tasksStringify);
+    this.storageService.setItem('settings', tasksStringify);
   }
 
   createSettingsObj() {
