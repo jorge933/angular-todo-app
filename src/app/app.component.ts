@@ -58,18 +58,15 @@ export class AppComponent {
   }
 
   get buttonDisabledCondition() {
-    return (
-      this.newTaskNameControl.hasError('required') ||
-      this.newTaskNameControl.hasError('maxlength')
-    );
+    const isRequired = this.newTaskNameControl.hasError('required');
+    const exceedingMaxLength = this.newTaskNameControl.hasError('maxlength');
+    const name = this.newTaskNameControl.value?.trim();
+    const isEmpty = !name;
+
+    return isRequired || exceedingMaxLength || isEmpty;
   }
 
   createTask() {
-    const { valid, value } = this.newTaskNameControl;
-    const trimValue = value?.trim();
-
-    if (!valid || !trimValue) return;
-
     this.createTaskModel();
 
     this.newTaskNameControl.reset();
