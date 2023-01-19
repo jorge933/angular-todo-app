@@ -24,6 +24,8 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.settingsForm = this.formBuilder.group(this.settings);
-    this.settingsForm.valueChanges.subscribe(this.settings$$.next);
+    this.settingsForm.valueChanges.subscribe((newValues) =>
+      this.settings$$.next(newValues)
+    );
   }
 }
