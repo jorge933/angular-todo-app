@@ -6,7 +6,7 @@
 </header>
 
 <section>
-  <form>
+  <form class="card">
     <div>
       <mat-form-field floatLabel="always">
         <mat-label>Type new task name...</mat-label>
@@ -34,8 +34,8 @@
     </mat-error>
   </form>
 
-  <div class="tasks" *ngIf="tasks$$ | async as tasks">
-    <mat-list class="tasks" *ngIf="tasks.length >= 1">
+  <div *ngIf="tasks$$ | async as tasks">
+    <mat-list class="card" *ngIf="tasks.length >= 1">
       <mat-list-item
         *ngFor="
           let task of tasks | paginate : ngxPaginationConfig;
@@ -53,6 +53,7 @@
       *ngIf="tasks.length >= 1"
       (pageChange)="changePage($event)"
       id="tasks-pagination"
+      class="card"
     ></pagination-controls>
   </div>
 </section>

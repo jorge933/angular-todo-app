@@ -2,19 +2,26 @@
   min-width: 50vw;
   max-width: 50vw;
   min-height: 30vh;
-  max-height: 30vh;
+  max-height: 50vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   position: relative;
 
-  button.delete {
-    background-color: #fb2c2c;
-    color: #ffffff;
+  h1 {
+    color: var(--text);
   }
 
   mat-dialog-actions {
     justify-content: right;
+    button {
+      color: var(--text);
+
+      &:first-child {
+        background-color: #fb2c2c;
+        color: white;
+      }
+    }
   }
 
   ::ng-deep {

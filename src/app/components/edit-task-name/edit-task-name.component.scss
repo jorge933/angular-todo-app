@@ -7,6 +7,7 @@
 
   h1 {
     text-align: center;
+    color: var(--text);
   }
 
   mat-form-field {
@@ -18,6 +19,11 @@
       min-width: 100%;
       max-width: 100%;
       font-size: 23px;
+      color: var(--text);
+
+      &::placeholder {
+        color: var(--text);
+      }
     }
   }
 
@@ -25,5 +31,6 @@
     display: flex;
     align-items: center;
     justify-content: right;
+    color: var(--text);
   }
 }

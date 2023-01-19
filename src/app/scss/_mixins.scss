@@ -1,0 +1,42 @@
+@import "vars";
+
+@mixin dark-mode-overrides() {
+  form {
+    mat-form-field:not(.mat-focused, .ng-touched.ng-invalid) {
+      --label-color: #d5c3c3;
+      .mat-form-field-label {
+        color: var(--label-color) !important;
+      }
+
+      .mat-form-field-underline {
+        background-color: var(--label-color);
+      }
+    }
+
+    [disabled] {
+      background-color: #e0e0e0 !important;
+    }
+  }
+
+  .mat-checkbox-frame {
+    border-color: white;
+  }
+
+  pagination-controls {
+    li * {
+      color: #cacaca !important;
+    }
+
+    li:not(.disabled, .current):hover * {
+      color: #000 !important;
+    }
+
+    li.disabled {
+      opacity: 0.6;
+    }
+  }
+
+  mat-dialog-container.mat-dialog-container {
+    background-color: var(--background);
+  }
+}

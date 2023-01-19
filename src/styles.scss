@@ -1,9 +1,12 @@
+@import "app/scss/vars";
+@import "app/scss/mixins";
+
 html {
-  & body {
+  body {
     height: 100%;
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-color: whitesmoke;
+    background-color: var(--background);
 
     .hot-toast-checkmark-icon {
       background-color: #50ff00 !important;
@@ -23,9 +26,45 @@ html {
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: #404040;
+      background-color: var(--scrollbar-bg);
       border-radius: 10px;
-      border: 3px solid whitesmoke;
+      border: 3px solid var(--background);
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #716a6a;
     }
   }
+}
+
+:root {
+  @media (prefers-color-scheme: light) {
+    @each $name, $color in $light-mode {
+      --#{$name}: #{$color};
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    @each $name, $color in $dark-mode {
+      --#{$name}: #{$color};
+    }
+  }
+
+  @each $name, $color in $light-mode {
+    --#{$name}: #{$color};
+  }
+
+  .dark {
+    @each $name, $color in $dark-mode {
+      --#{$name}: #{$color};
+    }
+  }
+}
+
+.dark {
+  @include dark-mode-overrides;
+}
+
+@media (prefers-color-scheme: dark) {
+  @include dark-mode-overrides;
 }
