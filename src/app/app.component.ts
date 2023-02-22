@@ -6,7 +6,7 @@ import { SettingsComponent } from '@todo-app/components';
 import { HOT_TOAST_STYLES } from '@todo-app/constants';
 import { Keys, ObjectType, Settings, Task } from '@todo-app/models';
 import { StorageService } from '@todo-app/services';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, from, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'ta-root',
@@ -144,6 +144,7 @@ export class AppComponent {
     const dialogReference = this.dialog.open(SettingsComponent, dialogConfig);
 
     dialogReference.afterClosed().subscribe((newSettings: Settings) => {
+      console.log(newSettings);
       const isObject = typeof newSettings === 'object';
       const settingsHasChanged = this.objectHasChanges(settings, newSettings);
 
@@ -164,7 +165,7 @@ export class AppComponent {
   objectHasChanges(oldObject: ObjectType, newObject: ObjectType) {
     const keys = Object.keys(oldObject) as Keys;
 
-    const objectHasChanges = keys.every(
+    const objectHasChanges = keys.some(
       (key) => oldObject[key] !== newObject[key]
     );
     return objectHasChanges;
