@@ -10,6 +10,7 @@
         [formControl]="newNameControl"
         [maxLengthInput]="maxLength"
         placeholder="New Task Name, Ex. Study"
+        (keyup.enter)="dialogReference.close(newNameControl.value)"
       />
     </mat-form-field>
   </div>

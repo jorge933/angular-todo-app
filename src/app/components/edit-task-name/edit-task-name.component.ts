@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'ta-edit-task-name',
@@ -10,7 +10,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class EditTaskNameComponent {
   newNameControl = new FormControl(this.data);
   maxLength = 16;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: string) {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: string,
+    public dialogReference: MatDialogRef<EditTaskNameComponent>
+  ) {}
 
   get disableCondition() {
     return (
